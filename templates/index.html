@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Company Email Sender</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+  .container {
+    background-color: #fff;
+    width: 90%;
+    max-width: 700px;
+    padding: 40px 40px 32px 40px;
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+  }
+  h1 {
+    margin-bottom: 36px;
+    color: #2e3a59;
+    font-weight: 700;
+    font-size: 2.2rem;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap:6px;
+  }
+  label {
+    font-weight: bold;
+    color: #273552;
+    font-size: 1rem;
+    margin-bottom: 2px;
+    letter-spacing: 0.2px;
+  }
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1.5px solid #cbd2e1;
+    border-radius: 7px;
+    font-size: 1rem;
+    color: #2e3a59;
+    box-sizing: border-box;
+    background: #f8fafc;
+    resize: vertical;
+    transition: border-color 0.25s;
+    margin-top: 0px; /* aligns input closer to label */
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  textarea:focus {
+    border-color: #2563eb;
+    outline: none;
+  }
+  input[type="file"] {
+    margin-top: 4px;
+    font-size: 1rem;
+  }
+  textarea {
+    min-height: 108px;
+  }
+  button {
+    background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+    color: white;
+    border: none;
+    padding: 16px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    margin-top: 18px;
+    cursor: pointer;
+    transition: background 0.4s;
+    letter-spacing: 0.8px;
+    width: 100%;
+  }
+  button:hover {
+    background: linear-gradient(90deg, #1d4ed8 0%, #1e3a8a 100%);
+  }
+  .flash {
+    padding: 14px 18px;
+    border-radius: 7px;
+    margin-bottom: 18px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  .flash.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1.5px solid #34d399;
+  }
+  .flash.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1.5px solid #f87171;
+  }
+  small {
+    font-size: 13px;
+    color: #7e88a1;
+    margin-bottom: 1px;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Company Email Sender</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data" novalidate>
+      
+      <div class="form-group">
+        <label for="sender"><strong>Sender Email *</strong></label>
+        <input type="email" id="sender" name="sender" placeholder="you@example.com" required />
+      </div>
+
+      <div class="form-group">
+        <label for="recipients"><strong>Recipient Emails (comma separated) *</strong></label>
+        <input type="text" id="recipients" name="recipients" placeholder="friend1@domain.com, friend2@domain.com" required />
+        <small>Separate multiple emails with commas</small>
+      </div>
+
+      <div class="form-group">
+        <label for="subject"><strong>Subject *</strong></label>
+        <input type="text" id="subject" name="subject" placeholder="Enter your email subject" required />
+      </div>
+
+      <div class="form-group">
+        <label for="message"><strong>Message *</strong></label>
+        <textarea id="message" name="message" placeholder="Type your message here..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="attachments"><strong>Attach Files (PDF, images, text)</strong></label>
+        <input type="file" id="attachments" name="attachments" accept=".pdf,image/*,.txt" multiple />
+      </div>
+      
+      <button type="submit">Send Email</button>
+    </form>
+  </div>
+</body>
+</html>
